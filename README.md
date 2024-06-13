@@ -71,7 +71,7 @@ Contributions are welcome! Please open an issue or submit a pull request for any
 
 ## License
 
-This project is licensed under the Apache License. See the [LICENSE](LICENSE) file for more information.
+This project is licensed under the Apache License. See the [LICENSE](LICENSE.txt) file for more information.
 
 ## Acknowledgments
 
