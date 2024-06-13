@@ -17,6 +17,9 @@
             <DataTemplate DataType="{x:Type vm:RegisterViewModel}">
                 <view:RegisterView />
             </DataTemplate>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Styles/ButtonStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

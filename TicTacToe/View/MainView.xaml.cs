@@ -1,5 +1,8 @@
-﻿using System.Windows;
+﻿using System.Runtime.InteropServices;
+using System;
+using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 
 namespace TicTacToe
 {
@@ -12,6 +15,21 @@ namespace TicTacToe
         {
             InitializeComponent();
         }
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int wMsg, int wParam, int lParam);
+
+        private void PnlControlBar_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            WindowInteropHelper helper = new WindowInteropHelper(this);
+            SendMessage(helper.Handle, 161, 2, 0);
+        }
+
+        private void PnlControlBar_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            this.MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
+        }
+
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed) DragMove();

@@ -8,6 +8,7 @@ namespace TicTacToe.ViewModel
     {
         //Fields
         private BaseViewModel _currentViewModel;
+        private string _title;
 
         //Properties
         public BaseViewModel CurrentViewModel
@@ -17,6 +18,15 @@ namespace TicTacToe.ViewModel
             {
                 _currentViewModel = value;
                 OnPropertyChanged(nameof(CurrentViewModel));
+            }
+        }
+        public string Title
+        {
+            get { return _title; }
+            set
+            {
+                _title = value;
+                OnPropertyChanged(nameof(Title));
             }
         }
 
@@ -38,11 +48,13 @@ namespace TicTacToe.ViewModel
         public void ExecuteLoginViewCommand(object obj)
         {
             CurrentViewModel = new LoginViewModel(this);
+            Title = "LOGIN";
         }
 
         public void ExecuteRegisterViewCommand(object obj)
         {
             CurrentViewModel = new RegisterViewModel(this);
+            Title = "REGISTER";
         }
     }
 }

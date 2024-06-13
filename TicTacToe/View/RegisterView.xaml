@@ -23,6 +23,7 @@
             Source="/Images/logo.png" />
 
         <TextBlock
+            Margin="0,10,0,0"
             HorizontalAlignment="Center"
             FontFamily="Montserrat"
             FontSize="25"

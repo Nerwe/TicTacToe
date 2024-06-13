@@ -23,6 +23,7 @@
             Source="/Images/logo.png" />
 
         <TextBlock
+            Margin="0,10,0,0"
             HorizontalAlignment="Center"
             FontFamily="Montserrat"
             FontSize="25"
@@ -123,7 +124,7 @@
             Margin="0,10,0,0"
             BorderThickness="0"
             Command="{Binding RegisterViewCommand}"
-            Content="Register"
+            Content="REGISTER"
             Cursor="Hand"
             FontFamily="Monserrat"
             FontSize="12"
