@@ -1,6 +1,5 @@
 ﻿using System.Collections.ObjectModel;
 using System.Data.SqlClient;
-using System.Net;
 using TicTacToe.Base;
 using TicTacToe.Model;
 
@@ -8,7 +7,7 @@ namespace TicTacToe.Repository
 {
     public class PlayerRepository : BaseRepository, IPlayerRepository
     {
-        public bool AuthenticateUser(NetworkCredential credential)
+        public bool AuthenticateUser(PlayerModel player)
         {
             bool validUser;
 
@@ -17,15 +16,16 @@ namespace TicTacToe.Repository
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT * FROM [Player] WHERE [username]=@username AND [password]=@password";
-                command.Parameters.Add("@username", System.Data.SqlDbType.NVarChar).Value = credential.UserName;
-                command.Parameters.Add("@password", System.Data.SqlDbType.NVarChar).Value = credential.Password;
+                command.CommandText = "SELECT * FROM [Player] WHERE [username]=@username AND [password]=@password AND [is_active]=@isActive";
+                command.Parameters.Add("@username", System.Data.SqlDbType.NVarChar).Value = player.Username;
+                command.Parameters.Add("@password", System.Data.SqlDbType.NVarChar).Value = player.Password;
+                command.Parameters.Add("@isActive", System.Data.SqlDbType.Bit).Value = player.IsActive;
                 validUser = command.ExecuteScalar() != null;
             }
 
             return validUser;
         }
-        public void AddPlayer(NetworkCredential credential)
+        public void AddPlayer(PlayerModel player)
         {
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
@@ -33,8 +33,8 @@ namespace TicTacToe.Repository
                 connection.Open();
                 command.Connection = connection;
                 command.CommandText = "INSERT INTO Player([username], [password]) VALUES (@username, @password)";
-                command.Parameters.Add("@username", System.Data.SqlDbType.NVarChar).Value = credential.UserName;
-                command.Parameters.Add("@password", System.Data.SqlDbType.NVarChar).Value = credential.Password;
+                command.Parameters.Add("@username", System.Data.SqlDbType.NVarChar).Value = player.Username;
+                command.Parameters.Add("@password", System.Data.SqlDbType.NVarChar).Value = player.Password;
                 command.ExecuteScalar();
             }
         }
@@ -46,9 +46,10 @@ namespace TicTacToe.Repository
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "UPDATE Player SET [username] = @username, [password] = @password WHERE [player_id] = @playerID";
+                command.CommandText = "UPDATE Player SET [username] = @username, [password] = @password, [is_active] = @isActive WHERE [player_id] = @playerID";
                 command.Parameters.Add("@username", System.Data.SqlDbType.NVarChar).Value = player.Username;
                 command.Parameters.Add("@password", System.Data.SqlDbType.NVarChar).Value = player.Password;
+                command.Parameters.Add("@isActive", System.Data.SqlDbType.Bit).Value = player.IsActive;
                 command.Parameters.Add("@playerID", System.Data.SqlDbType.Int).Value = player.PlayerID;
                 command.ExecuteNonQuery();
             }
@@ -74,9 +75,10 @@ namespace TicTacToe.Repository
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT [player_id], [username], [password] FROM Player WHERE [username] = @username AND [password] = @password";
+                command.CommandText = "SELECT [player_id], [username], [password], [is_active] FROM Player WHERE [username] = @username AND [password] = @password AND [is_active] = @isActive ";
                 command.Parameters.Add("@username", System.Data.SqlDbType.NVarChar).Value = player.Username;
                 command.Parameters.Add("@password", System.Data.SqlDbType.NVarChar).Value = player.Password;
+                command.Parameters.Add("@isActive", System.Data.SqlDbType.Bit).Value = player.IsActive;
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -86,7 +88,8 @@ namespace TicTacToe.Repository
                         {
                             PlayerID = reader.GetInt32(0),
                             Username = reader.GetString(1),
-                            Password = reader.GetString(2)
+                            Password = reader.GetString(2),
+                            IsActive = reader.GetBoolean(3)
                         };
                     }
                 }
@@ -103,7 +106,7 @@ namespace TicTacToe.Repository
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT [player_id], [username], [password] FROM Player";
+                command.CommandText = "SELECT [player_id], [username] FROM Player";
 
                 using (var reader = command.ExecuteReader())
                 {
@@ -112,14 +115,42 @@ namespace TicTacToe.Repository
                         players.Add(new PlayerModel
                         {
                             PlayerID = reader.GetInt32(0),
-                            Username = reader.GetString(1),
-                            Password = reader.GetString(2)
+                            Username = reader.GetString(1)
                         });
                     }
                 }
             }
 
             return players;
+        }
+        public ObservableCollection<PlayerModel> GetPlayersByRank()
+        {
+            var games = new ObservableCollection<PlayerModel>();
+
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand())
+            {
+                connection.Open();
+                command.Connection = connection;
+                command.CommandText = "exec GetPlayersByRank";
+
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        games.Add(new PlayerModel
+                        {
+                            Username = reader.GetString(0),
+                            Wins = reader.GetInt32(1),
+                            Losses = reader.GetInt32(2),
+                            Draws = reader.GetInt32(3)
+                        });
+                    }
+                }
+            }
+
+            return games;
+
         }
     }
 }

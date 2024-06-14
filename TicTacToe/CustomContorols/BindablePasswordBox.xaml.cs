@@ -1,5 +1,4 @@
-﻿using System.Security;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace TicTacToe.CustomControls
@@ -10,11 +9,11 @@ namespace TicTacToe.CustomControls
     public partial class BindablePasswordBox : UserControl
     {
         public static readonly DependencyProperty PasswordProperty =
-            DependencyProperty.Register(nameof(Password), typeof(SecureString), typeof(BindablePasswordBox));
+            DependencyProperty.Register(nameof(Password), typeof(string), typeof(BindablePasswordBox));
 
-        public SecureString Password
+        public string Password
         {
-            get { return (SecureString)GetValue(PasswordProperty); }
+            get { return (string)GetValue(PasswordProperty); }
             set { SetValue(PasswordProperty, value); }
         }
 
@@ -26,7 +25,7 @@ namespace TicTacToe.CustomControls
 
         private void OnPasswordChanged(object sender, RoutedEventArgs e)
         {
-            Password = txtPassword.SecurePassword;
+            Password = txtPassword.Password;
         }
     }
 }

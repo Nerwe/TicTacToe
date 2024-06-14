@@ -1,5 +1,4 @@
-﻿using System.Security;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using TicTacToe.Base;
 using TicTacToe.Model;
 using TicTacToe.Repository;
@@ -13,7 +12,7 @@ namespace TicTacToe.ViewModel
         private IPlayerRepository _playerRepository;
 
         private string _username;
-        private SecureString _password;
+        private string _password;
         private string _errorMessage;
 
         //Properties
@@ -26,7 +25,7 @@ namespace TicTacToe.ViewModel
                 OnPropertyChanged(nameof(Username));
             }
         }
-        public SecureString Password
+        public string Password
         {
             get => _password;
             set
@@ -78,7 +77,13 @@ namespace TicTacToe.ViewModel
         //Executes
         private void ExecuteRegisterCommand(object obj)
         {
-            _playerRepository.AddPlayer(new System.Net.NetworkCredential(Username, Password));
+            var _player = new PlayerModel()
+            {
+                Username = Username,
+                Password = Password
+            };
+
+            _playerRepository.AddPlayer(_player);
             _mainViewModel.ExecuteLoginViewCommand(null);
         }
         private void ExecuteLoginViewCommand(object obj)

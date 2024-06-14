@@ -13,12 +13,30 @@
             <DataTemplate DataType="{x:Type vm:LoginViewModel}">
                 <view:LoginView />
             </DataTemplate>
-
             <DataTemplate DataType="{x:Type vm:RegisterViewModel}">
                 <view:RegisterView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ProfileViewModel}">
+                <view:ProfileView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:ProfilePreferencesViewModel}">
+                <view:ProfilePreferencesView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:GameViewModel}">
+                <view:GameView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:GamePreferencesViewModel}">
+                <view:GamePreferencesView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:PlayerTopViewModel}">
+                <view:PlayerTopView />
+            </DataTemplate>
+
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/ButtonStyles.xaml" />
+                <ResourceDictionary Source="/Styles/RadioButtonStyles.xaml" />
+                <ResourceDictionary Source="/Styles/CheckBoxStyles.xaml" />
+                <ResourceDictionary Source="/Styles/DataGridStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

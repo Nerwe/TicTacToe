@@ -73,13 +73,24 @@
                             Tag="#FB539B">
                             <fa:IconImage Icon="Xmark" Style="{StaticResource controlButtonIcon}" />
                         </Button>
-
                         <Button
                             x:Name="BtnMinimize"
                             Click="BtnMinimize_Click"
                             Style="{StaticResource controlButton}"
                             Tag="#FB539B">
                             <fa:IconImage Icon="WindowMinimize" Style="{StaticResource controlButtonIcon}" />
+                        </Button>
+                        <Button
+                            x:Name="BtnHelp"
+                            Click="BtnHelp_Click"
+                            Style="{StaticResource controlButton}"
+                            Tag="#FB539B">
+                            <fa:IconImage
+                                Width="15"
+                                Height="15"
+                                FlowDirection="LeftToRight"
+                                Icon="QuestionCircle"
+                                Style="{StaticResource controlButtonIcon}" />
                         </Button>
 
                     </StackPanel>

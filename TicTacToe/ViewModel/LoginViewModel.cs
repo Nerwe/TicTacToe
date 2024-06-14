@@ -1,8 +1,6 @@
-﻿using System;
-using System.Security;
-using System.Windows;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using TicTacToe.Base;
+using TicTacToe.Helpers;
 using TicTacToe.Model;
 using TicTacToe.Repository;
 
@@ -15,7 +13,7 @@ namespace TicTacToe.ViewModel
         private IPlayerRepository _playerRepository;
 
         private string _username;
-        private SecureString _password;
+        private string _password;
         private string _errorMessage;
 
         //Properties
@@ -28,7 +26,7 @@ namespace TicTacToe.ViewModel
                 OnPropertyChanged(nameof(Username));
             }
         }
-        public SecureString Password
+        public string Password
         {
             get => _password;
             set
@@ -77,10 +75,19 @@ namespace TicTacToe.ViewModel
         //Executes
         private void ExecuteLoginCommand(object obj)
         {
-            var isValidPlayer = _playerRepository.AuthenticateUser(new System.Net.NetworkCredential(Username, Password));
-            if (isValidPlayer)
+            var _currentPlayer = new PlayerModel()
             {
-                MessageBox.Show("Profile.xaml");
+                Username = Username,
+                Password = Password,
+                IsActive = true
+            };
+
+            var _validPlayer = _playerRepository.GetPlayer(_currentPlayer);
+
+            if (_validPlayer != null)
+            {
+                PlayerSession.Instance.SetCurrentPlayer(_validPlayer);
+                _mainViewModel.ExecuteProfileViewCommand(null);
             }
             else
                 ErrorMessage = "* Invalid Username or Password";

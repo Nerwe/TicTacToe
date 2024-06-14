@@ -41,6 +41,7 @@ namespace TicTacToe.ViewModel
         {
             LoginViewCommand = new ViewModelCommand(ExecuteLoginViewCommand);
             RegisterViewCommand = new ViewModelCommand(ExecuteRegisterViewCommand);
+            ProfileViewCommand = new ViewModelCommand(ExecuteProfileViewCommand);
 
             ExecuteLoginViewCommand(null);
         }
@@ -50,11 +51,36 @@ namespace TicTacToe.ViewModel
             CurrentViewModel = new LoginViewModel(this);
             Title = "LOGIN";
         }
-
         public void ExecuteRegisterViewCommand(object obj)
         {
             CurrentViewModel = new RegisterViewModel(this);
             Title = "REGISTER";
         }
+        public void ExecuteProfileViewCommand(object obj)
+        {
+            CurrentViewModel = new ProfileViewModel(this);
+            Title = "PROFILE";
+        }
+        public void ExecuteProfilePreferencesViewCommand(object obj)
+        {
+            CurrentViewModel = new ProfilePreferencesViewModel(this);
+            Title = "PROFILE PREFERENCES";
+        }
+        public void ExecuteGameViewCommand(object obj)
+        {
+            CurrentViewModel = new GameViewModel(this);
+            Title = "GAME";
+        }
+        public void ExecuteGamePreferencesViewCommand(object obj)
+        {
+            CurrentViewModel = new GamePreferencesViewModel(this);
+            Title = "GAME PREFERENCES";
+        }
+        public void ExecutePlayerTopViewCommand(object obj)
+        {
+            CurrentViewModel = new PlayerTopViewModel(this);
+            Title = "TOP PLAYERS";
+        }
+
     }
 }
