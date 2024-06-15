@@ -28,16 +28,37 @@
             </Button>
         </StackPanel>
 
-        <DataGrid
+        <StackPanel
             Grid.Column="1"
-            AutoGenerateColumns="True"
-            Background="#200F53"
-            BorderThickness="0"
-            ColumnWidth="*"
-            IsReadOnly="True"
-            ItemsSource="{Binding TopPlayers}"
-            ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-            ScrollViewer.VerticalScrollBarVisibility="Hidden" />
+            VerticalAlignment="Center"
+            Orientation="Vertical">
+            <TextBlock
+                Margin="0,10,0,0"
+                HorizontalAlignment="Center"
+                FontFamily="Montserrat"
+                FontSize="25"
+                FontWeight="Medium"
+                Foreground="White"
+                Text="TOP PLAYERS" />
+            <DataGrid
+                Margin="0,10,0,0"
+                AutoGenerateColumns="False"
+                Background="#200F53"
+                BorderThickness="0"
+                ColumnWidth="*"
+                IsReadOnly="True"
+                ItemsSource="{Binding TopPlayers}"
+                ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Rank}" Header="Rank" />
+                    <DataGridTextColumn Binding="{Binding Username}" Header="Player" />
+                    <DataGridTextColumn Binding="{Binding Wins}" Header="Wins" />
+                    <DataGridTextColumn Binding="{Binding Losses}" Header="Losses" />
+                    <DataGridTextColumn Binding="{Binding Draws}" Header="Draws" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
 
         <StackPanel Grid.Column="2" Orientation="Vertical">
             <Button

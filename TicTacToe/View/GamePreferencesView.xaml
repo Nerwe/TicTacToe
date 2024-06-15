@@ -41,7 +41,7 @@
                 HorizontalAlignment="Center"
                 Orientation="Horizontal">
                 <Button
-                    Command=""
+                    Command="{Binding PreviousCommand}"
                     Style="{StaticResource menuButton}"
                     Tag="#FB539B">
                     <fa:IconImage
@@ -58,9 +58,9 @@
                     FontSize="25"
                     FontWeight="Medium"
                     Foreground="White"
-                    Text="{Binding BotDifficulty}" />
+                    Text="{Binding CurrentDifficult}" />
                 <Button
-                    Command=""
+                    Command="{Binding NextCommand}"
                     Style="{StaticResource menuButton}"
                     Tag="#FB539B">
                     <fa:IconImage
@@ -78,6 +78,7 @@
                 FontFamily="Monserrat"
                 FontSize="18"
                 Foreground="White"
+                IsChecked="{Binding Hint, Mode=TwoWay}"
                 Style="{StaticResource checkBoxStyle}" />
             <Button
                 x:Name="BtnStartGame"

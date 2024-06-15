@@ -72,13 +72,18 @@
     <Compile Include="CustomContorols\BindablePasswordBox.xaml.cs">
       <DependentUpon>BindablePasswordBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\CellTypeToIconConverter.cs" />
+    <Compile Include="Helpers\GameSettings.cs" />
     <Compile Include="Helpers\PlayerSession.cs" />
     <Compile Include="Model\GameModel.cs" />
+    <Compile Include="Model\GamePreferences.cs" />
     <Compile Include="Model\PlayerModel.cs" />
+    <Compile Include="Model\CellType.cs" />
     <Compile Include="Repository\GameRepository.cs" />
     <Compile Include="Repository\IGameRepository.cs" />
     <Compile Include="Repository\IPlayerRepository.cs" />
     <Compile Include="Repository\PlayerRepository.cs" />
+    <Compile Include="Services\Game.cs" />
     <Compile Include="ViewModel\GamePreferencesViewModel.cs" />
     <Compile Include="ViewModel\GameViewModel.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />

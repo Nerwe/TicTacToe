@@ -2,6 +2,7 @@
     x:Class="TicTacToe.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:helper="clr-namespace:TicTacToe.Helpers"
     xmlns:local="clr-namespace:TicTacToe"
     xmlns:view="clr-namespace:TicTacToe.View"
     xmlns:vm="clr-namespace:TicTacToe.ViewModel"
@@ -9,6 +10,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <vm:MainViewModel x:Key="MainViewModel" />
+            <helper:CellTypeToIconConverter x:Key="CellTypeToIconConverter" />
 
             <DataTemplate DataType="{x:Type vm:LoginViewModel}">
                 <view:LoginView />

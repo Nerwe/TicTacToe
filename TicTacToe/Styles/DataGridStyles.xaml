@@ -3,9 +3,9 @@
     <Style TargetType="{x:Type DataGridColumnHeader}">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Foreground" Value="#BCBEE0" />
-        <Setter Property="Padding" Value="10,0,0,10" />
         <Setter Property="FontFamily" Value="Montserrat" />
         <Setter Property="FontSize" Value="15" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
     </Style>
 
     <Style TargetType="{x:Type DataGridCell}">
@@ -13,6 +13,9 @@
         <Setter Property="Foreground" Value="#200F53" />
         <Setter Property="FontFamily" Value="Montserrat" />
         <Setter Property="FontSize" Value="15" />
+        <Setter Property="TextBlock.TextAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Style.Triggers>
             <Trigger Property="IsSelected" Value="True">
                 <Setter Property="BorderBrush" Value="#7376BD" />
