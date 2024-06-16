@@ -75,6 +75,7 @@
     <Compile Include="Helpers\CellTypeToIconConverter.cs" />
     <Compile Include="Helpers\GameSettings.cs" />
     <Compile Include="Helpers\PlayerSession.cs" />
+    <Compile Include="Helpers\StringFormatConverter .cs" />
     <Compile Include="Model\GameModel.cs" />
     <Compile Include="Model\GamePreferences.cs" />
     <Compile Include="Model\PlayerModel.cs" />

@@ -16,7 +16,7 @@ namespace TicTacToe.ViewModel
         private IGameRepository _gameRepository;
 
         private PlayerModel _currentPlayer;
-        private ObservableCollection<GameModel> _playerGames;
+        private PlayerModel _currentPlayerStats;
 
         //Properties
         public PlayerModel CurrentPlayer
@@ -28,13 +28,13 @@ namespace TicTacToe.ViewModel
                 OnPropertyChanged(nameof(CurrentPlayer));
             }
         }
-        public ObservableCollection<GameModel> PlayerGames
+        public PlayerModel CurrentPlayerStats
         {
-            get => _playerGames;
+            get => _currentPlayerStats;
             set
             {
-                _playerGames = value;
-                OnPropertyChanged(nameof(PlayerGames));
+                _currentPlayerStats = value;
+                OnPropertyChanged(nameof(CurrentPlayerStats));
             }
         }
 
@@ -45,12 +45,14 @@ namespace TicTacToe.ViewModel
         {
             _mainViewModel = mainViewModel;
             _playerRepository = new PlayerRepository();
-            _playerGames = new ObservableCollection<GameModel>();
 
             CurrentPlayer = PlayerSession.Instance.CurrentPlayer;
+            _currentPlayerStats = new PlayerModel();
 
             ProfilePreferencesViewCommand = new ViewModelCommand(ExecuteProfilePreferencesViewCommand);
             GamePreferencesViewCommand = new ViewModelCommand(ExecuteGamePreferencesViewCommand);
+
+            LoadPlayerStats();
         }
 
         private void ExecuteProfilePreferencesViewCommand(object obj)
@@ -63,14 +65,16 @@ namespace TicTacToe.ViewModel
             _mainViewModel.ExecuteGamePreferencesViewCommand(null);
         }
 
-        private void LoadPlayerGames()
+        private void LoadPlayerStats()
         {
-            PlayerGames = _gameRepository.GetGamesByPlayer(CurrentPlayer.PlayerID);
+            CurrentPlayerStats = _playerRepository.GetPlayerStats(CurrentPlayer.PlayerID);
 
-            CurrentPlayer.Wins = PlayerGames.Count(game => game.Score == 1);
-            CurrentPlayer.Losses = PlayerGames.Count(game => game.Score == 0);
-            CurrentPlayer.Draws = PlayerGames.Count(game => game.Score == 2);
-            CurrentPlayer.Rank = CurrentPlayer.Wins + CurrentPlayer.Draws;
+            CurrentPlayer.Wins = CurrentPlayerStats.Wins;
+            CurrentPlayer.Losses = CurrentPlayerStats.Losses;
+            CurrentPlayer.Draws = CurrentPlayerStats.Draws;
+            CurrentPlayer.Rank = CurrentPlayerStats.Rank;
+
+            PlayerSession.Instance.SetCurrentPlayer(CurrentPlayer);
         }
     }
 }

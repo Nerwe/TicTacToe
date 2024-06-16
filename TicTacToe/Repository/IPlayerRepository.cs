@@ -10,6 +10,7 @@ namespace TicTacToe.Repository
         void UpdatePlayer(PlayerModel player);
         void DeletePlayer(PlayerModel player);
         PlayerModel GetPlayer(PlayerModel player);
+        PlayerModel GetPlayerStats(int playerID);
         ObservableCollection<PlayerModel> GetAllPlayers();
         ObservableCollection<PlayerModel> GetPlayersByRank();
     }

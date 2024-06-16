@@ -64,7 +64,7 @@
                         FontSize="25"
                         FontWeight="Medium"
                         Foreground="White"
-                        Text="Lose:" />
+                        Text="Losses:" />
                     <TextBlock
                         Margin="0,10,0,0"
                         HorizontalAlignment="Right"
@@ -72,7 +72,7 @@
                         FontSize="25"
                         FontWeight="Medium"
                         Foreground="White"
-                        Text="Draw:" />
+                        Text="Draws:" />
                     <TextBlock
                         Margin="0,10,0,0"
                         HorizontalAlignment="Right"

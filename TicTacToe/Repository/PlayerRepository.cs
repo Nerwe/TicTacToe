@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Data;
 using System.Data.SqlClient;
 using TicTacToe.Base;
 using TicTacToe.Model;
@@ -97,6 +98,32 @@ namespace TicTacToe.Repository
             return null;
         }
 
+        public PlayerModel GetPlayerStats(int playerID)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SqlCommand("GetPlayerStats", connection))
+            {
+                connection.Open();
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.AddWithValue("@playerID", playerID);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        return new PlayerModel
+                        {
+                            Wins = reader.GetInt32(0),
+                            Losses = reader.GetInt32(1),
+                            Draws = reader.GetInt32(2),
+                            Rank = reader.GetInt32(3)
+                        };
+                    }
+                }
+            }
+            return null;
+        }
+
         public ObservableCollection<PlayerModel> GetAllPlayers()
         {
             var players = new ObservableCollection<PlayerModel>();
@@ -125,7 +152,7 @@ namespace TicTacToe.Repository
         }
         public ObservableCollection<PlayerModel> GetPlayersByRank()
         {
-            var games = new ObservableCollection<PlayerModel>();
+            var players = new ObservableCollection<PlayerModel>();
 
             using (var connection = GetConnection())
             using (var command = new SqlCommand())
@@ -138,18 +165,19 @@ namespace TicTacToe.Repository
                 {
                     while (reader.Read())
                     {
-                        games.Add(new PlayerModel
+                        players.Add(new PlayerModel
                         {
                             Username = reader.GetString(0),
                             Wins = reader.GetInt32(1),
                             Losses = reader.GetInt32(2),
-                            Draws = reader.GetInt32(3)
+                            Draws = reader.GetInt32(3),
+                            Rank = reader.GetInt32(4)
                         });
                     }
                 }
             }
 
-            return games;
+            return players;
 
         }
     }

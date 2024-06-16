@@ -15,11 +15,11 @@ namespace TicTacToe.Helpers
                 switch (cellType)
                 {
                     case CellType.Empty:
-                        return IconChar.None; // Пустой значок, если ячейка пустая
+                        return IconChar.None;
                     case CellType.Cross:
-                        return IconChar.X; // Значок для крестика
+                        return IconChar.X;
                     case CellType.Circle:
-                        return IconChar.Circle; // Значок для нолика
+                        return IconChar.Circle;
                     default:
                         return IconChar.None;
                 }

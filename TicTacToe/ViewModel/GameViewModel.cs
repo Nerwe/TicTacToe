@@ -16,11 +16,13 @@ namespace TicTacToe.ViewModel
         private IGameRepository _gameRepository;
 
         private PlayerModel _currentPlayer;
+        private PlayerModel _currentPlayerPreferences;
 
         private GamePreferences _gamePreferences;
         private Game _game;
 
         private bool _isGameRunning;
+        private string _gameReuslt;
 
         private ObservableCollection<ObservableCollection<CellType>> _board;
 
@@ -55,6 +57,16 @@ namespace TicTacToe.ViewModel
             }
         }
 
+        public string GameResult
+        {
+            get => _gameReuslt;
+            set
+            {
+                _gameReuslt = value;
+                OnPropertyChanged(nameof(GameResult));
+            }
+        }
+
         //Commands
         public ICommand StartGameCommand { get; }
         public ICommand CellClickCommand { get; }
@@ -71,7 +83,7 @@ namespace TicTacToe.ViewModel
             _gameRepository = new GameRepository();
 
             CurrentPlayer = PlayerSession.Instance.CurrentPlayer;
-            _gamePreferences = GameSettings.Instance.CurrentGame;
+            GamePreferences = GameSettings.Instance.CurrentGame;
 
             Board = new ObservableCollection<ObservableCollection<CellType>>();
 
@@ -104,7 +116,10 @@ namespace TicTacToe.ViewModel
         //Executes
         private void ExecuteStartGameCommand(object obj)
         {
+            CurrentPlayer = PlayerSession.Instance.CurrentPlayer;
+
             FillBoard();
+            GameResult = "";
             _game = new Game();
             _isGameRunning = true;
         }
@@ -143,22 +158,61 @@ namespace TicTacToe.ViewModel
                 Board[row][col] = CellType.Cross;
                 _game.MakeMove(row, col);
 
-                if (!_game.IsGameOver())
+                if (_game.IsGameOver())
                 {
-                    var move = _game.MakeBotMove();
-                    Board[move.row][move.col] = CellType.Circle;
-
-                    if (_game.IsGameOver())
-                    {
-                        _isGameRunning = false;
-                    }
+                    GameResult = _game.GameResult;
+                    CheckGameStatus();
+                    _isGameRunning = false;
+                    return;
                 }
-                else
+
+                var move = _game.MakeBotMove(_gamePreferences.Difficulty);
+                Board[move.row][move.col] = CellType.Circle;
+
+                if (_game.IsGameOver())
                 {
+                    GameResult = _game.GameResult;
+                    CheckGameStatus();
                     _isGameRunning = false;
                 }
             }
+        }
 
+        private void CheckGameStatus()
+        {
+            if (GameResult == "Cross")
+            {
+                CurrentPlayer.Wins += 1;
+                GameModel game = new GameModel()
+                {
+                    PlayerID = CurrentPlayer.PlayerID,
+                    Score = 2,
+                    Date = System.DateTime.Now
+                };
+                _gameRepository.AddGame(game);
+            }
+            else if (GameResult == "Circle")
+            {
+                CurrentPlayer.Losses += 1;
+                GameModel game = new GameModel()
+                {
+                    PlayerID = CurrentPlayer.PlayerID,
+                    Score = 0,
+                    Date = System.DateTime.Now
+                };
+                _gameRepository.AddGame(game);
+            }
+            else if (GameResult == "Draw")
+            {
+                CurrentPlayer.Draws += 1;
+                GameModel game = new GameModel()
+                {
+                    PlayerID = CurrentPlayer.PlayerID,
+                    Score = 1,
+                    Date = System.DateTime.Now
+                };
+                _gameRepository.AddGame(game);
+            }
         }
     }
 }
