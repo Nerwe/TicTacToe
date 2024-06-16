@@ -240,7 +240,7 @@ namespace TicTacToe.Services
         }
         private (int row, int col) AIBot()
         {
-            return (0, 0);
+            return NoobBot();
         }
 
         private int Minimax(CellType[,] board, bool isMaximizing)
