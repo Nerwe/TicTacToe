@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TicTacToe.Base;
 using TicTacToe.Helpers;
@@ -36,7 +37,6 @@ namespace TicTacToe.ViewModel
                 OnPropertyChanged(nameof(CurrentPlayer));
             }
         }
-
         public GamePreferences GamePreferences
         {
             get => _gamePreferences;
@@ -46,7 +46,6 @@ namespace TicTacToe.ViewModel
                 OnPropertyChanged(nameof(GamePreferences));
             }
         }
-
         public ObservableCollection<ObservableCollection<CellType>> Board
         {
             get => _board;
@@ -56,7 +55,6 @@ namespace TicTacToe.ViewModel
                 OnPropertyChanged(nameof(Board));
             }
         }
-
         public string GameResult
         {
             get => _gameReuslt;
@@ -81,6 +79,7 @@ namespace TicTacToe.ViewModel
 
             _playerRepository = new PlayerRepository();
             _gameRepository = new GameRepository();
+            _game = new Game();
 
             CurrentPlayer = PlayerSession.Instance.CurrentPlayer;
             GamePreferences = GameSettings.Instance.CurrentGame;
@@ -93,6 +92,7 @@ namespace TicTacToe.ViewModel
             ProfileViewCommand = new ViewModelCommand(ExecuteProfileViewCommand, CanExecuteProfileViewCommand);
 
             FillBoard();
+            PlayerChooser();
         }
 
         //Checks
@@ -114,14 +114,46 @@ namespace TicTacToe.ViewModel
         }
 
         //Executes
+        private void PlayerChooser()
+        {
+            Random random = new Random();
+            bool isFirstMoveByBot = random.Next(2) == 0;
+
+            if (isFirstMoveByBot)
+            {
+                _game.IsPlayerTurn = false;
+            }
+        }
+        private void FillBoard()
+        {
+            var newBoard = new ObservableCollection<ObservableCollection<CellType>>();
+            for (int i = 0; i < 3; i++)
+            {
+                var row = new ObservableCollection<CellType>();
+                for (int j = 0; j < 3; j++)
+                {
+                    row.Add(CellType.Empty);
+                }
+                newBoard.Add(row);
+            }
+            Board = newBoard;
+        }
+
         private void ExecuteStartGameCommand(object obj)
         {
             CurrentPlayer = PlayerSession.Instance.CurrentPlayer;
 
-            FillBoard();
             GameResult = "";
-            _game = new Game();
+            _game.RestartGame();
             _isGameRunning = true;
+
+            FillBoard();
+
+            if (!_game.IsPlayerTurn)
+            {
+                var move = _game.MakeBotMove(_gamePreferences.Difficulty);
+                Board[move.row][move.col] = CellType.Circle;
+            }
         }
         private void ExecuteGamePreferencesViewCommand(object obj)
         {
@@ -130,21 +162,6 @@ namespace TicTacToe.ViewModel
         private void ExecuteProfileViewCommand(object obj)
         {
             _mainViewModel.ExecuteProfileViewCommand(null);
-        }
-
-        private void FillBoard()
-        {
-            Board.Clear();
-
-            for (int i = 0; i < 3; i++)
-            {
-                var row = new ObservableCollection<CellType>();
-                for (int j = 0; j < 3; j++)
-                {
-                    row.Add(CellType.Empty);
-                }
-                Board.Add(row);
-            }
         }
         private void ExecuteCellClickCommand(object obj)
         {

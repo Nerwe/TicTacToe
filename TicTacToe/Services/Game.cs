@@ -1,25 +1,50 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Windows.Documents;
 using TicTacToe.Model;
 
 namespace TicTacToe.Services
 {
     public class Game
     {
-        public CellType[,] Board { get; private set; }
-        public bool IsPlayerTurn { get; private set; }
-        public string GameResult { get; private set; }
+        public ObservableCollection<ObservableCollection<CellType>> Board { get; private set; }
+        public bool IsPlayerTurn { get;  set; }
+        public string GameResult { get; set; }
 
         public Game()
         {
-            Board = new CellType[3, 3];
+            Board = new ObservableCollection<ObservableCollection<CellType>>();
+
+            FillBoard();
             IsPlayerTurn = true;
+        }
+
+        private void FillBoard()
+        {
+            var newBoard = new ObservableCollection<ObservableCollection<CellType>>();
+            for (int i = 0; i < 3; i++)
+            {
+                var row = new ObservableCollection<CellType>();
+                for (int j = 0; j < 3; j++)
+                {
+                    row.Add(CellType.Empty);
+                }
+                newBoard.Add(row);
+            }
+            Board = newBoard;
+        }
+
+        public void RestartGame()
+        {
+            Board.Clear();
+            FillBoard();
         }
 
         public void MakeMove(int row, int col)
         {
-            if (Board[row, col] == CellType.Empty)
+            if (Board[row][col] == CellType.Empty)
             {
-                Board[row, col] = IsPlayerTurn ? CellType.Cross : CellType.Circle;
+                Board[row][col] = IsPlayerTurn ? CellType.Cross : CellType.Circle;
                 IsPlayerTurn = !IsPlayerTurn;
             }
         }
@@ -51,8 +76,9 @@ namespace TicTacToe.Services
             // Проверка по горизонтали
             for (int row = 0; row < 3; row++)
             {
-                if (Board[row, 0] == player && Board[row, 1] == player && Board[row, 2] == player)
+                if (Board[row][0] == player && Board[row][1] == player && Board[row][2] == player)
                 {
+                    IsPlayerTurn = player == CellType.Cross;
                     GameResult = player.ToString();
                     return true;
                 }
@@ -61,17 +87,19 @@ namespace TicTacToe.Services
             // Проверка по вертикали
             for (int col = 0; col < 3; col++)
             {
-                if (Board[0, col] == player && Board[1, col] == player && Board[2, col] == player)
+                if (Board[0][col] == player && Board[1][col] == player && Board[2][col] == player)
                 {
+                    IsPlayerTurn = player == CellType.Cross;
                     GameResult = player.ToString();
                     return true;
                 }
             }
 
             // Проверка по диагонали
-            if ((Board[0, 0] == player && Board[1, 1] == player && Board[2, 2] == player) ||
-                (Board[0, 2] == player && Board[1, 1] == player && Board[2, 0] == player))
+            if ((Board[0][0] == player && Board[1][1] == player && Board[2][2] == player) ||
+                (Board[0][2] == player && Board[1][1] == player && Board[2][0] == player))
             {
+                IsPlayerTurn = player == CellType.Cross;
                 GameResult = player.ToString();
                 return true;
             }
@@ -84,8 +112,9 @@ namespace TicTacToe.Services
             {
                 for (int col = 0; col < 3; col++)
                 {
-                    if (Board[row, col] == CellType.Empty)
+                    if (Board[row][col] == CellType.Empty)
                     {
+                        IsPlayerTurn = true;
                         GameResult = "Draw";
                         return false;
                     }
@@ -102,9 +131,9 @@ namespace TicTacToe.Services
             {
                 row = random.Next(3);
                 col = random.Next(3);
-            } while (Board[row, col] != CellType.Empty);
+            } while (Board[row][col] != CellType.Empty);
 
-            Board[row, col] = CellType.Circle;
+            Board[row][col] = CellType.Circle;
             IsPlayerTurn = !IsPlayerTurn;
 
             return (row, col);
@@ -114,17 +143,17 @@ namespace TicTacToe.Services
             // Строки
             for (int i = 0; i < 3; i++)
             {
-                if (Board[i, 0] == CellType.Cross && Board[i, 1] == CellType.Cross && Board[i, 2] == CellType.Empty)
+                if (Board[i][0] == CellType.Cross && Board[i][1] == CellType.Cross && Board[i][2] == CellType.Empty)
                 {
                     MakeMove(i, 2);
                     return (i, 2);
                 }
-                if (Board[i, 0] == CellType.Cross && Board[i, 2] == CellType.Cross && Board[i, 1] == CellType.Empty)
+                if (Board[i][0] == CellType.Cross && Board[i][2] == CellType.Cross && Board[i][1] == CellType.Empty)
                 {
                     MakeMove(i, 1);
                     return (i, 1);
                 }
-                if (Board[i, 1] == CellType.Cross && Board[i, 2] == CellType.Cross && Board[i, 0] == CellType.Empty)
+                if (Board[i][1] == CellType.Cross && Board[i][2] == CellType.Cross && Board[i][0] == CellType.Empty)
                 {
                     MakeMove(i, 0);
                     return (i, 0);
@@ -134,17 +163,17 @@ namespace TicTacToe.Services
             // Колонки
             for (int j = 0; j < 3; j++)
             {
-                if (Board[0, j] == CellType.Cross && Board[1, j] == CellType.Cross && Board[2, j] == CellType.Empty)
+                if (Board[0][j] == CellType.Cross && Board[1][j] == CellType.Cross && Board[2][j] == CellType.Empty)
                 {
                     MakeMove(2, j);
                     return (2, j);
                 }
-                if (Board[0, j] == CellType.Cross && Board[2, j] == CellType.Cross && Board[1, j] == CellType.Empty)
+                if (Board[0][j] == CellType.Cross && Board[2][j] == CellType.Cross && Board[1][j] == CellType.Empty)
                 {
                     MakeMove(1, j);
                     return (1, j);
                 }
-                if (Board[1, j] == CellType.Cross && Board[2, j] == CellType.Cross && Board[0, j] == CellType.Empty)
+                if (Board[1][j] == CellType.Cross && Board[2][j] == CellType.Cross && Board[0][j] == CellType.Empty)
                 {
                     MakeMove(0, j);
                     return (0, j);
@@ -152,32 +181,32 @@ namespace TicTacToe.Services
             }
 
             // Диагонали
-            if (Board[0, 0] == CellType.Cross && Board[1, 1] == CellType.Cross && Board[2, 2] == CellType.Empty)
+            if (Board[0][0] == CellType.Cross && Board[1][1] == CellType.Cross && Board[2][2] == CellType.Empty)
             {
                 MakeMove(2, 2);
                 return (2, 2);
             }
-            if (Board[0, 0] == CellType.Cross && Board[2, 2] == CellType.Cross && Board[1, 1] == CellType.Empty)
+            if (Board[0][0] == CellType.Cross && Board[2][2] == CellType.Cross && Board[1][1] == CellType.Empty)
             {
                 MakeMove(1, 1);
                 return (1, 1);
             }
-            if (Board[1, 1] == CellType.Cross && Board[2, 2] == CellType.Cross && Board[0, 0] == CellType.Empty)
+            if (Board[1][1] == CellType.Cross && Board[2][2] == CellType.Cross && Board[0][0] == CellType.Empty)
             {
                 MakeMove(0, 0);
                 return (0, 0);
             }
-            if (Board[0, 2] == CellType.Cross && Board[1, 1] == CellType.Cross && Board[2, 0] == CellType.Empty)
+            if (Board[0][2] == CellType.Cross && Board[1][1] == CellType.Cross && Board[2][0] == CellType.Empty)
             {
                 MakeMove(2, 0);
                 return (2, 0);
             }
-            if (Board[0, 2] == CellType.Cross && Board[2, 0] == CellType.Cross && Board[1, 1] == CellType.Empty)
+            if (Board[0][2] == CellType.Cross && Board[2][0] == CellType.Cross && Board[1][1] == CellType.Empty)
             {
                 MakeMove(1, 1);
                 return (1, 1);
             }
-            if (Board[1, 1] == CellType.Cross && Board[2, 0] == CellType.Cross && Board[0, 2] == CellType.Empty)
+            if (Board[1][1] == CellType.Cross && Board[2][0] == CellType.Cross && Board[0][2] == CellType.Empty)
             {
                 MakeMove(0, 2);
                 return (0, 2);
@@ -191,16 +220,16 @@ namespace TicTacToe.Services
             {
                 for (int col = 0; col < 3; col++)
                 {
-                    if (Board[row, col] == CellType.Empty)
+                    if (Board[row][col] == CellType.Empty)
                     {
-                        Board[row, col] = IsPlayerTurn ? CellType.Cross : CellType.Circle;
+                        Board[row][col] = IsPlayerTurn ? CellType.Cross : CellType.Circle;
 
                         if (CheckForWin(IsPlayerTurn ? CellType.Cross : CellType.Circle))
                         {
                             IsPlayerTurn = true;
                             return (row, col);
                         }
-                        Board[row, col] = CellType.Empty;
+                        Board[row][col] = CellType.Empty;
                     }
                 }
             }
@@ -216,13 +245,13 @@ namespace TicTacToe.Services
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    if (Board[i, j] == CellType.Empty)
+                    if (Board[i][j] == CellType.Empty)
                     {
-                        Board[i, j] = CellType.Circle;
+                        Board[i][j] = CellType.Circle;
 
                         int score = Minimax(Board, false);
 
-                        Board[i, j] = CellType.Empty;
+                        Board[i][j] = CellType.Empty;
 
                         if (score > bestScore)
                         {
@@ -233,7 +262,7 @@ namespace TicTacToe.Services
                 }
             }
 
-            Board[bestMove.row, bestMove.col] = CellType.Circle;
+            Board[bestMove.row][bestMove.col] = CellType.Circle;
             IsPlayerTurn = true;
 
             return bestMove;
@@ -243,7 +272,7 @@ namespace TicTacToe.Services
             return NoobBot();
         }
 
-        private int Minimax(CellType[,] board, bool isMaximizing)
+        private int Minimax(ObservableCollection<ObservableCollection<CellType>> board, bool isMaximizing)
         {
             if (IsGameOver())
             {
@@ -262,11 +291,11 @@ namespace TicTacToe.Services
                 {
                     for (int j = 0; j < 3; j++)
                     {
-                        if (board[i, j] == CellType.Empty)
+                        if (board[i][j] == CellType.Empty)
                         {
-                            board[i, j] = CellType.Circle;
+                            board[i][j] = CellType.Circle;
                             bestScore = Math.Max(bestScore, Minimax(board, false));
-                            board[i, j] = CellType.Empty;
+                            board[i][j] = CellType.Empty;
                         }
                     }
                 }
@@ -279,11 +308,11 @@ namespace TicTacToe.Services
                 {
                     for (int j = 0; j < 3; j++)
                     {
-                        if (board[i, j] == CellType.Empty)
+                        if (board[i][j] == CellType.Empty)
                         {
-                            board[i, j] = CellType.Cross;
+                            board[i][j] = CellType.Cross;
                             bestScore = Math.Min(bestScore, Minimax(board, true));
-                            board[i, j] = CellType.Empty;
+                            board[i][j] = CellType.Empty;
                         }
                     }
                 }
