@@ -17,7 +17,6 @@ namespace TicTacToe.ViewModel
         private IGameRepository _gameRepository;
 
         private PlayerModel _currentPlayer;
-        private PlayerModel _currentPlayerPreferences;
 
         private GamePreferences _gamePreferences;
         private Game _game;
@@ -167,11 +166,11 @@ namespace TicTacToe.ViewModel
         }
         private void ExecuteGamePreferencesViewCommand(object obj)
         {
-            _mainViewModel.ExecuteGamePreferencesViewCommand(null);
+            _mainViewModel.GamePreferencesViewCommand.Execute(null);
         }
         private void ExecuteProfileViewCommand(object obj)
         {
-            _mainViewModel.ExecuteProfileViewCommand(null);
+            _mainViewModel.ProfileViewCommand.Execute(null);
         }
         private void ExecuteCellClickCommand(object obj)
         {

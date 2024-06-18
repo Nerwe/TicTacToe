@@ -35,10 +35,12 @@
             <DataTemplate DataType="{x:Type vm:PlayerTopViewModel}">
                 <view:PlayerTopView />
             </DataTemplate>
+            <DataTemplate DataType="{x:Type vm:InfoViewModel}">
+                <view:InfoView />
+            </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/ButtonStyles.xaml" />
-                <ResourceDictionary Source="/Styles/RadioButtonStyles.xaml" />
                 <ResourceDictionary Source="/Styles/CheckBoxStyles.xaml" />
                 <ResourceDictionary Source="/Styles/DataGridStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>

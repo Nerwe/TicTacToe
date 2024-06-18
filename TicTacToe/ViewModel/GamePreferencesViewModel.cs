@@ -93,11 +93,11 @@ namespace TicTacToe.ViewModel
         //Executes
         private void ExecutePlayerTopViewCommand(object obj)
         {
-            _mainViewModel.ExecutePlayerTopViewCommand(null);
+            _mainViewModel.PlayerTopViewCommand.Execute(null);
         }
         private void ExecuteProfileViewCommand(object obj)
         {
-            _mainViewModel.ExecuteProfileViewCommand(null);
+            _mainViewModel.ProfileViewCommand.Execute(null);
         }
         private void ExecuteGameViewCommand(object obj)
         {
@@ -105,7 +105,7 @@ namespace TicTacToe.ViewModel
             _gamePreferences.Hint = Hint;
 
             GameSettings.Instance.SetCurrentGame(_gamePreferences);
-            _mainViewModel.ExecuteGameViewCommand(null);
+            _mainViewModel.GameViewCommand.Execute(null);
         }
 
         private void ExecuteNextCommand(object obj)

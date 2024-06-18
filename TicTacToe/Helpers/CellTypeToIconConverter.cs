@@ -21,7 +21,7 @@ namespace TicTacToe.Helpers
                     case CellType.Circle:
                         return IconChar.Circle;
                     case CellType.Hint:
-                        return IconChar.Cross;
+                        return IconChar.Lightbulb;
                     default:
                         return IconChar.None;
                 }

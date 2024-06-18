@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using TicTacToe.Base;
 using TicTacToe.Helpers;
 using TicTacToe.Model;
@@ -101,25 +102,32 @@ namespace TicTacToe.ViewModel
         private void ExecuteLogoutCommand(object obj)
         {
             PlayerSession.Instance.ClearCurrentPlayer();
-            _mainViewModel.ExecuteLoginViewCommand(null);
+            _mainViewModel.LoginViewCommand.Execute(null);
         }
 
         private void ExecuteDelAccountCommand(object obj)
         {
-            CurrentPlayer.IsActive = false;
-            _playerRepository.UpdatePlayer(CurrentPlayer);
-            PlayerSession.Instance.ClearCurrentPlayer();
-            _mainViewModel.ExecuteLoginViewCommand(null);
+            if (DateTime.Now.Subtract(CurrentPlayer.RegisterDate).TotalDays > 60)
+            {
+                CurrentPlayer.IsActive = false;
+                _playerRepository.UpdatePlayer(CurrentPlayer);
+                PlayerSession.Instance.ClearCurrentPlayer();
+                _mainViewModel.LoginViewCommand.Execute(null);
+            }
+            else
+            {
+                ErrorMessage = "Register date < 60 days";
+            }
         }
 
         private void ExecuteGamePreferencesViewCommand(object obj)
         {
-            _mainViewModel.ExecuteGamePreferencesViewCommand(null);
+            _mainViewModel.GamePreferencesViewCommand.Execute(null);
         }
 
         private void ExecuteProfileViewCommand(object obj)
         {
-            _mainViewModel.ExecuteProfileViewCommand(null);
+            _mainViewModel.ProfileViewCommand.Execute(null);
         }
     }
 }

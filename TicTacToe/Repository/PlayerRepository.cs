@@ -76,7 +76,7 @@ namespace TicTacToe.Repository
             {
                 connection.Open();
                 command.Connection = connection;
-                command.CommandText = "SELECT [player_id], [username], [password], [is_active] FROM Player WHERE [username] = @username AND [password] = @password AND [is_active] = @isActive ";
+                command.CommandText = "SELECT [player_id], [username], [password], [register_date], [is_active] FROM Player WHERE [username] = @username AND [password] = @password AND [is_active] = @isActive";
                 command.Parameters.Add("@username", System.Data.SqlDbType.NVarChar).Value = player.Username;
                 command.Parameters.Add("@password", System.Data.SqlDbType.NVarChar).Value = player.Password;
                 command.Parameters.Add("@isActive", System.Data.SqlDbType.Bit).Value = player.IsActive;
@@ -90,7 +90,8 @@ namespace TicTacToe.Repository
                             PlayerID = reader.GetInt32(0),
                             Username = reader.GetString(1),
                             Password = reader.GetString(2),
-                            IsActive = reader.GetBoolean(3)
+                            RegisterDate = reader.GetDateTime(3),
+                            IsActive = reader.GetBoolean(4)
                         };
                     }
                 }

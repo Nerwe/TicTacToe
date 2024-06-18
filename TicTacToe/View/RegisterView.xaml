@@ -93,31 +93,8 @@
             Cursor="Hand"
             FontFamily="Monserrat"
             FontSize="12"
-            Foreground="White">
-
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="Background" Value="#462AD8" />
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#28AEED" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border
-                        Width="150"
-                        Height="30"
-                        Background="{TemplateBinding Background}"
-                        CornerRadius="14">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+            Foreground="White"
+            Style="{StaticResource mainButton}" />
         <Button
             x:Name="BtnRegister"
             Grid.Column="2"
@@ -128,31 +105,8 @@
             Cursor="Hand"
             FontFamily="Monserrat"
             FontSize="12"
-            Foreground="White">
-
-            <Button.Style>
-                <Style TargetType="Button">
-                    <Setter Property="Background" Value="#462AD8" />
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#28AEED" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </Button.Style>
-
-            <Button.Template>
-                <ControlTemplate TargetType="Button">
-                    <Border
-                        Width="150"
-                        Height="30"
-                        Background="{TemplateBinding Background}"
-                        CornerRadius="14">
-                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    </Border>
-                </ControlTemplate>
-            </Button.Template>
-        </Button>
+            Foreground="White"
+            Style="{StaticResource mainButton}" />
     </StackPanel>
 </UserControl>
 

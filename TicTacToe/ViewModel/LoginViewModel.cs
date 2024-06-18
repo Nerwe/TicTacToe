@@ -12,7 +12,7 @@ namespace TicTacToe.ViewModel
         private readonly MainViewModel _mainViewModel;
         private IPlayerRepository _playerRepository;
 
-        private string _username = "admin";
+        private string _username = "admin1";
         private string _password = "admin";
         private string _errorMessage;
 
@@ -87,14 +87,14 @@ namespace TicTacToe.ViewModel
             if (_validPlayer != null)
             {
                 PlayerSession.Instance.SetCurrentPlayer(_validPlayer);
-                _mainViewModel.ExecuteProfileViewCommand(null);
+                _mainViewModel.ProfileViewCommand.Execute(null);
             }
             else
                 ErrorMessage = "* Invalid Username or Password";
         }
         private void ExecuteRegisterViewCommand(object obj)
         {
-            _mainViewModel.ExecuteRegisterViewCommand(null);
+            _mainViewModel.RegisterViewCommand.Execute(null);
         }
     }
 }

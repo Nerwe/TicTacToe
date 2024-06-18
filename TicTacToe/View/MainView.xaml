@@ -83,6 +83,7 @@
                         <Button
                             x:Name="BtnHelp"
                             Click="BtnHelp_Click"
+                            Command="{Binding InfoViewCommand}"
                             Style="{StaticResource controlButton}"
                             Tag="#FB539B">
                             <fa:IconImage

@@ -11,7 +11,6 @@ namespace TicTacToe.ViewModel
         //Fields
         private readonly MainViewModel _mainViewModel;
         private IPlayerRepository _playerRepository;
-        private IGameRepository _gameRepository;
 
         private PlayerModel _currentPlayer;
         private PlayerModel _currentPlayerStats;
@@ -55,12 +54,12 @@ namespace TicTacToe.ViewModel
 
         private void ExecuteProfilePreferencesViewCommand(object obj)
         {
-            _mainViewModel.ExecuteProfilePreferencesViewCommand(null);
+            _mainViewModel.ProfilePreferencesViewCommand.Execute(null);
         }
 
         private void ExecuteGamePreferencesViewCommand(object obj)
         {
-            _mainViewModel.ExecuteGamePreferencesViewCommand(null);
+            _mainViewModel.GamePreferencesViewCommand.Execute(null);
         }
 
         private void LoadPlayerStats()

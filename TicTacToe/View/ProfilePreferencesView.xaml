@@ -92,7 +92,7 @@
                     Grid.Column="0"
                     d:Text="Error message"
                     FontFamily="Montserrat"
-                    FontSize="12"
+                    FontSize="10"
                     FontWeight="Medium"
                     Foreground="#D7596D"
                     Text="{Binding ErrorMessage}"
@@ -102,7 +102,7 @@
                     HorizontalAlignment="Right"
                     d:Text="Done message"
                     FontFamily="Montserrat"
-                    FontSize="12"
+                    FontSize="10"
                     FontWeight="Medium"
                     Foreground="#59D770"
                     Text="{Binding DoneMessage}"
@@ -118,31 +118,8 @@
                 Cursor="Hand"
                 FontFamily="Monserrat"
                 FontSize="12"
-                Foreground="White">
-
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Background" Value="#462AD8" />
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#28AEED" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border
-                            Width="150"
-                            Height="30"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="14">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                Foreground="White"
+                Style="{StaticResource mainButton}" />
             <Button
                 x:Name="BtnRegister"
                 Grid.Column="2"
@@ -153,31 +130,8 @@
                 Cursor="Hand"
                 FontFamily="Monserrat"
                 FontSize="12"
-                Foreground="White">
-
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Background" Value="#462AD8" />
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#28AEED" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border
-                            Width="150"
-                            Height="30"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="14">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                Foreground="White"
+                Style="{StaticResource mainButton}" />
             <Button
                 x:Name="BtnDelAccount"
                 Grid.Column="2"
@@ -188,31 +142,8 @@
                 Cursor="Hand"
                 FontFamily="Monserrat"
                 FontSize="12"
-                Foreground="Black">
-
-                <Button.Style>
-                    <Style TargetType="Button">
-                        <Setter Property="Background" Value="#D62F4A" />
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter Property="Background" Value="#F54991" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
-
-                <Button.Template>
-                    <ControlTemplate TargetType="Button">
-                        <Border
-                            Width="150"
-                            Height="30"
-                            Background="{TemplateBinding Background}"
-                            CornerRadius="14">
-                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
-                        </Border>
-                    </ControlTemplate>
-                </Button.Template>
-            </Button>
+                Foreground="White"
+                Style="{StaticResource mainButton}" />
         </StackPanel>
 
         <StackPanel Grid.Column="2" Orientation="Vertical">

@@ -84,11 +84,11 @@ namespace TicTacToe.ViewModel
             };
 
             _playerRepository.AddPlayer(_player);
-            _mainViewModel.ExecuteLoginViewCommand(null);
+            _mainViewModel.LoginViewCommand.Execute(null);
         }
         private void ExecuteLoginViewCommand(object obj)
         {
-            _mainViewModel.ExecuteLoginViewCommand(null);
+            _mainViewModel.LoginViewCommand.Execute(null);
         }
     }
 }

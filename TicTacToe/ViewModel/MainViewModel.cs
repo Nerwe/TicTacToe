@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Windows.Input;
 using TicTacToe.Base;
 using TicTacToe.Model;
 
@@ -33,7 +34,12 @@ namespace TicTacToe.ViewModel
         //Commands
         public ICommand LoginViewCommand { get; }
         public ICommand RegisterViewCommand { get; }
+        public ICommand InfoViewCommand { get; }
         public ICommand ProfileViewCommand { get; }
+        public ICommand ProfilePreferencesViewCommand { get; }
+        public ICommand PlayerTopViewCommand { get; }
+        public ICommand GameViewCommand { get; }
+        public ICommand GamePreferencesViewCommand { get; }
 
         public PlayerModel CurrentUser { get; set; }
 
@@ -41,46 +47,60 @@ namespace TicTacToe.ViewModel
         {
             LoginViewCommand = new ViewModelCommand(ExecuteLoginViewCommand);
             RegisterViewCommand = new ViewModelCommand(ExecuteRegisterViewCommand);
+            InfoViewCommand = new ViewModelCommand(ExecuteInfoViewCommand, CanExecuteInfoViewCommand);
             ProfileViewCommand = new ViewModelCommand(ExecuteProfileViewCommand);
+            ProfilePreferencesViewCommand = new ViewModelCommand(ExecuteProfilePreferencesViewCommand);
+            PlayerTopViewCommand = new ViewModelCommand(ExecutePlayerTopViewCommand);
+            GameViewCommand = new ViewModelCommand(ExecuteGameViewCommand);
+            GamePreferencesViewCommand = new ViewModelCommand(ExecuteGamePreferencesViewCommand);
 
             ExecuteLoginViewCommand(null);
         }
 
-        public void ExecuteLoginViewCommand(object obj)
+        private bool CanExecuteInfoViewCommand(object obj)
+        {
+            return !(CurrentViewModel is LoginViewModel) && !(CurrentViewModel is RegisterViewModel);
+        }
+
+        private void ExecuteLoginViewCommand(object obj)
         {
             CurrentViewModel = new LoginViewModel(this);
             Title = "LOGIN";
         }
-        public void ExecuteRegisterViewCommand(object obj)
+        private void ExecuteRegisterViewCommand(object obj)
         {
             CurrentViewModel = new RegisterViewModel(this);
             Title = "REGISTER";
         }
-        public void ExecuteProfileViewCommand(object obj)
+        private void ExecuteProfileViewCommand(object obj)
         {
             CurrentViewModel = new ProfileViewModel(this);
             Title = "PROFILE";
         }
-        public void ExecuteProfilePreferencesViewCommand(object obj)
+        private void ExecuteProfilePreferencesViewCommand(object obj)
         {
             CurrentViewModel = new ProfilePreferencesViewModel(this);
             Title = "PROFILE PREFERENCES";
         }
-        public void ExecuteGameViewCommand(object obj)
+        private void ExecuteGameViewCommand(object obj)
         {
             CurrentViewModel = new GameViewModel(this);
             Title = "GAME";
         }
-        public void ExecuteGamePreferencesViewCommand(object obj)
+        private void ExecuteGamePreferencesViewCommand(object obj)
         {
             CurrentViewModel = new GamePreferencesViewModel(this);
             Title = "GAME PREFERENCES";
         }
-        public void ExecutePlayerTopViewCommand(object obj)
+        private void ExecutePlayerTopViewCommand(object obj)
         {
             CurrentViewModel = new PlayerTopViewModel(this);
             Title = "TOP PLAYERS";
         }
-
+        private void ExecuteInfoViewCommand(object obj)
+        {
+            CurrentViewModel = new InfoViewModel(this);
+            Title = "INFO";
+        }
     }
 }

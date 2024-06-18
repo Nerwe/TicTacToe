@@ -58,12 +58,12 @@ namespace TicTacToe.ViewModel
 
         private void ExecuteGamePreferencesViewCommand(object obj)
         {
-            _mainViewModel.ExecuteGamePreferencesViewCommand(null);
+            _mainViewModel.GamePreferencesViewCommand.Execute(null);
         }
 
         private void ExecuteProfileViewCommand(object obj)
         {
-            _mainViewModel.ExecuteProfileViewCommand(null);
+            _mainViewModel.ProfileViewCommand.Execute(null);
         }
     }
 }
