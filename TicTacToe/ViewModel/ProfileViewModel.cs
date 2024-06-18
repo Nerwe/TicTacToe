@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using TicTacToe.Base;
 using TicTacToe.Helpers;
 using TicTacToe.Model;

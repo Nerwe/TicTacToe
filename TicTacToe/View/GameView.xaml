@@ -243,27 +243,24 @@
                         Grid.Column="0"
                         Command="{Binding CellClickCommand}"
                         CommandParameter="00"
-                        Style="{StaticResource menuButton}"
-                        Tag="#FB539B">
-                        <fa:IconImage Icon="{Binding Board[0][0], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource menuButtonIcon}" />
+                        Style="{StaticResource cellButton}">
+                        <fa:IconImage Icon="{Binding Board[0][0], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource cellButtonIcon}" />
                     </Button>
                     <Button
                         Grid.Row="0"
                         Grid.Column="1"
                         Command="{Binding CellClickCommand}"
                         CommandParameter="01"
-                        Style="{StaticResource menuButton}"
-                        Tag="#FB539B">
-                        <fa:IconImage Icon="{Binding Board[0][1], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource menuButtonIcon}" />
+                        Style="{StaticResource cellButton}">
+                        <fa:IconImage Icon="{Binding Board[0][1], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource cellButtonIcon}" />
                     </Button>
                     <Button
                         Grid.Row="0"
                         Grid.Column="2"
                         Command="{Binding CellClickCommand}"
                         CommandParameter="02"
-                        Style="{StaticResource menuButton}"
-                        Tag="#FB539B">
-                        <fa:IconImage Icon="{Binding Board[0][2], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource menuButtonIcon}" />
+                        Style="{StaticResource cellButton}">
+                        <fa:IconImage Icon="{Binding Board[0][2], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource cellButtonIcon}" />
                     </Button>
 
                     <Button
@@ -271,27 +268,24 @@
                         Grid.Column="0"
                         Command="{Binding CellClickCommand}"
                         CommandParameter="10"
-                        Style="{StaticResource menuButton}"
-                        Tag="#FB539B">
-                        <fa:IconImage Icon="{Binding Board[1][0], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource menuButtonIcon}" />
+                        Style="{StaticResource cellButton}">
+                        <fa:IconImage Icon="{Binding Board[1][0], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource cellButtonIcon}" />
                     </Button>
                     <Button
                         Grid.Row="1"
                         Grid.Column="1"
                         Command="{Binding CellClickCommand}"
                         CommandParameter="11"
-                        Style="{StaticResource menuButton}"
-                        Tag="#FB539B">
-                        <fa:IconImage Icon="{Binding Board[1][1], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource menuButtonIcon}" />
+                        Style="{StaticResource cellButton}">
+                        <fa:IconImage Icon="{Binding Board[1][1], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource cellButtonIcon}" />
                     </Button>
                     <Button
                         Grid.Row="1"
                         Grid.Column="2"
                         Command="{Binding CellClickCommand}"
                         CommandParameter="12"
-                        Style="{StaticResource menuButton}"
-                        Tag="#FB539B">
-                        <fa:IconImage Icon="{Binding Board[1][2], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource menuButtonIcon}" />
+                        Style="{StaticResource cellButton}">
+                        <fa:IconImage Icon="{Binding Board[1][2], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource cellButtonIcon}" />
                     </Button>
 
                     <Button
@@ -299,27 +293,24 @@
                         Grid.Column="0"
                         Command="{Binding CellClickCommand}"
                         CommandParameter="20"
-                        Style="{StaticResource menuButton}"
-                        Tag="#FB539B">
-                        <fa:IconImage Icon="{Binding Board[2][0], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource menuButtonIcon}" />
+                        Style="{StaticResource cellButton}">
+                        <fa:IconImage Icon="{Binding Board[2][0], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource cellButtonIcon}" />
                     </Button>
                     <Button
                         Grid.Row="2"
                         Grid.Column="1"
                         Command="{Binding CellClickCommand}"
                         CommandParameter="21"
-                        Style="{StaticResource menuButton}"
-                        Tag="#FB539B">
-                        <fa:IconImage Icon="{Binding Board[2][1], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource menuButtonIcon}" />
+                        Style="{StaticResource cellButton}">
+                        <fa:IconImage Icon="{Binding Board[2][1], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource cellButtonIcon}" />
                     </Button>
                     <Button
                         Grid.Row="2"
                         Grid.Column="2"
                         Command="{Binding CellClickCommand}"
                         CommandParameter="22"
-                        Style="{StaticResource menuButton}"
-                        Tag="#FB539B">
-                        <fa:IconImage Icon="{Binding Board[2][2], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource menuButtonIcon}" />
+                        Style="{StaticResource cellButton}">
+                        <fa:IconImage Icon="{Binding Board[2][2], Converter={StaticResource CellTypeToIconConverter}}" Style="{StaticResource cellButtonIcon}" />
                     </Button>
                 </Grid>
             </Border>

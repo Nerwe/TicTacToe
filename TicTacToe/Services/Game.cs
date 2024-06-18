@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Windows.Documents;
 using TicTacToe.Model;
 
 namespace TicTacToe.Services
@@ -8,7 +7,7 @@ namespace TicTacToe.Services
     public class Game
     {
         public ObservableCollection<ObservableCollection<CellType>> Board { get; private set; }
-        public bool IsPlayerTurn { get;  set; }
+        public bool IsPlayerTurn { get; set; }
         public string GameResult { get; set; }
 
         public Game()
@@ -59,7 +58,7 @@ namespace TicTacToe.Services
                 case "Attack":
                     return AttackBot();
                 case "Pro":
-                    return ProBot();
+                    return ProBot(CellType.Circle);
                 case "AI":
                     return AIBot();
                 default:
@@ -140,78 +139,22 @@ namespace TicTacToe.Services
         }
         private (int row, int col) DefenceBot()
         {
-            // Строки
-            for (int i = 0; i < 3; i++)
+            for (int row = 0; row < 3; row++)
             {
-                if (Board[i][0] == CellType.Cross && Board[i][1] == CellType.Cross && Board[i][2] == CellType.Empty)
+                for (int col = 0; col < 3; col++)
                 {
-                    MakeMove(i, 2);
-                    return (i, 2);
-                }
-                if (Board[i][0] == CellType.Cross && Board[i][2] == CellType.Cross && Board[i][1] == CellType.Empty)
-                {
-                    MakeMove(i, 1);
-                    return (i, 1);
-                }
-                if (Board[i][1] == CellType.Cross && Board[i][2] == CellType.Cross && Board[i][0] == CellType.Empty)
-                {
-                    MakeMove(i, 0);
-                    return (i, 0);
+                    if (Board[row][col] == CellType.Empty)
+                    {
+                        Board[row][col] = CellType.Cross;
+                        if (CheckForWin(CellType.Cross))
+                        {
+                            Board[row][col] = CellType.Circle;
+                            return (row, col);
+                        }
+                        Board[row][col] = CellType.Empty;
+                    }
                 }
             }
-
-            // Колонки
-            for (int j = 0; j < 3; j++)
-            {
-                if (Board[0][j] == CellType.Cross && Board[1][j] == CellType.Cross && Board[2][j] == CellType.Empty)
-                {
-                    MakeMove(2, j);
-                    return (2, j);
-                }
-                if (Board[0][j] == CellType.Cross && Board[2][j] == CellType.Cross && Board[1][j] == CellType.Empty)
-                {
-                    MakeMove(1, j);
-                    return (1, j);
-                }
-                if (Board[1][j] == CellType.Cross && Board[2][j] == CellType.Cross && Board[0][j] == CellType.Empty)
-                {
-                    MakeMove(0, j);
-                    return (0, j);
-                }
-            }
-
-            // Диагонали
-            if (Board[0][0] == CellType.Cross && Board[1][1] == CellType.Cross && Board[2][2] == CellType.Empty)
-            {
-                MakeMove(2, 2);
-                return (2, 2);
-            }
-            if (Board[0][0] == CellType.Cross && Board[2][2] == CellType.Cross && Board[1][1] == CellType.Empty)
-            {
-                MakeMove(1, 1);
-                return (1, 1);
-            }
-            if (Board[1][1] == CellType.Cross && Board[2][2] == CellType.Cross && Board[0][0] == CellType.Empty)
-            {
-                MakeMove(0, 0);
-                return (0, 0);
-            }
-            if (Board[0][2] == CellType.Cross && Board[1][1] == CellType.Cross && Board[2][0] == CellType.Empty)
-            {
-                MakeMove(2, 0);
-                return (2, 0);
-            }
-            if (Board[0][2] == CellType.Cross && Board[2][0] == CellType.Cross && Board[1][1] == CellType.Empty)
-            {
-                MakeMove(1, 1);
-                return (1, 1);
-            }
-            if (Board[1][1] == CellType.Cross && Board[2][0] == CellType.Cross && Board[0][2] == CellType.Empty)
-            {
-                MakeMove(0, 2);
-                return (0, 2);
-            }
-
             return NoobBot();
         }
         public (int row, int col) AttackBot()
@@ -222,11 +165,10 @@ namespace TicTacToe.Services
                 {
                     if (Board[row][col] == CellType.Empty)
                     {
-                        Board[row][col] = IsPlayerTurn ? CellType.Cross : CellType.Circle;
+                        Board[row][col] = CellType.Circle;
 
-                        if (CheckForWin(IsPlayerTurn ? CellType.Cross : CellType.Circle))
+                        if (CheckForWin(CellType.Circle))
                         {
-                            IsPlayerTurn = true;
                             return (row, col);
                         }
                         Board[row][col] = CellType.Empty;
@@ -236,7 +178,7 @@ namespace TicTacToe.Services
 
             return NoobBot();
         }
-        public (int row, int col) ProBot()
+        public (int row, int col) ProBot(CellType cell)
         {
             int bestScore = int.MinValue;
             (int row, int col) bestMove = (-1, -1);
@@ -247,9 +189,9 @@ namespace TicTacToe.Services
                 {
                     if (Board[i][j] == CellType.Empty)
                     {
-                        Board[i][j] = CellType.Circle;
+                        Board[i][j] = cell;
 
-                        int score = Minimax(Board, false);
+                        int score = Minimax(Board, false, cell);
 
                         Board[i][j] = CellType.Empty;
 
@@ -262,7 +204,8 @@ namespace TicTacToe.Services
                 }
             }
 
-            Board[bestMove.row][bestMove.col] = CellType.Circle;
+            if (cell == CellType.Circle)
+                Board[bestMove.row][bestMove.col] = cell;
             IsPlayerTurn = true;
 
             return bestMove;
@@ -272,13 +215,13 @@ namespace TicTacToe.Services
             return NoobBot();
         }
 
-        private int Minimax(ObservableCollection<ObservableCollection<CellType>> board, bool isMaximizing)
+        private int Minimax(ObservableCollection<ObservableCollection<CellType>> board, bool isMaximizing, CellType cell)
         {
             if (IsGameOver())
             {
                 if (GameResult == "Draw")
                     return 0;
-                else if (GameResult == CellType.Circle.ToString())
+                else if (GameResult == cell.ToString())
                     return 10;
                 else
                     return -10;
@@ -293,8 +236,8 @@ namespace TicTacToe.Services
                     {
                         if (board[i][j] == CellType.Empty)
                         {
-                            board[i][j] = CellType.Circle;
-                            bestScore = Math.Max(bestScore, Minimax(board, false));
+                            board[i][j] = cell;
+                            bestScore = Math.Max(bestScore, Minimax(board, false, cell));
                             board[i][j] = CellType.Empty;
                         }
                     }
@@ -310,14 +253,19 @@ namespace TicTacToe.Services
                     {
                         if (board[i][j] == CellType.Empty)
                         {
-                            board[i][j] = CellType.Cross;
-                            bestScore = Math.Min(bestScore, Minimax(board, true));
+                            board[i][j] = cell == CellType.Circle ? CellType.Cross : CellType.Circle;
+                            bestScore = Math.Min(bestScore, Minimax(board, true, cell));
                             board[i][j] = CellType.Empty;
                         }
                     }
                 }
                 return bestScore;
             }
+        }
+
+        public (int row, int col) HintMove()
+        {
+            return ProBot(CellType.Cross);
         }
     }
 }

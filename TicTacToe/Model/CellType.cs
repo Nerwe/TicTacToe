@@ -4,6 +4,7 @@
     {
         Empty,
         Cross,
-        Circle
+        Circle,
+        Hint
     }
 }

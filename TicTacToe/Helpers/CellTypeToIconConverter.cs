@@ -20,6 +20,8 @@ namespace TicTacToe.Helpers
                         return IconChar.X;
                     case CellType.Circle:
                         return IconChar.Circle;
+                    case CellType.Hint:
+                        return IconChar.Cross;
                     default:
                         return IconChar.None;
                 }

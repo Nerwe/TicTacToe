@@ -25,6 +25,9 @@ namespace TicTacToe.ViewModel
         private bool _isGameRunning;
         private string _gameReuslt;
 
+        private int _hintRow;
+        private int _hintCol;
+
         private ObservableCollection<ObservableCollection<CellType>> _board;
 
         //Properties
@@ -151,8 +154,15 @@ namespace TicTacToe.ViewModel
 
             if (!_game.IsPlayerTurn)
             {
-                var move = _game.MakeBotMove(_gamePreferences.Difficulty);
+                var move = _game.MakeBotMove("Noob");
                 Board[move.row][move.col] = CellType.Circle;
+            }
+            if (_gamePreferences.Hint)
+            {
+                var hintMove = _game.HintMove();
+                _hintRow = hintMove.row;
+                _hintCol = hintMove.col;
+                Board[_hintRow][_hintCol] = CellType.Hint;
             }
         }
         private void ExecuteGamePreferencesViewCommand(object obj)
@@ -170,8 +180,13 @@ namespace TicTacToe.ViewModel
             int row = int.Parse(param[0].ToString());
             int col = int.Parse(param[1].ToString());
 
-            if (Board[row][col] == CellType.Empty)
+            if (Board[row][col] == CellType.Empty || Board[row][col] == CellType.Hint)
             {
+                if (_gamePreferences.Hint)
+                {
+                    Board[_hintRow][_hintCol] = CellType.Empty;
+                }
+
                 Board[row][col] = CellType.Cross;
                 _game.MakeMove(row, col);
 
@@ -191,6 +206,15 @@ namespace TicTacToe.ViewModel
                     GameResult = _game.GameResult;
                     CheckGameStatus();
                     _isGameRunning = false;
+                    return;
+                }
+
+                if (_gamePreferences.Hint)
+                {
+                    var hintMove = _game.HintMove();
+                    _hintRow = hintMove.row;
+                    _hintCol = hintMove.col;
+                    Board[_hintRow][_hintCol] = CellType.Hint;
                 }
             }
         }
