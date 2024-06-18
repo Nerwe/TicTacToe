@@ -58,9 +58,9 @@ namespace TicTacToe.Services
                 case "Attack":
                     return AttackBot();
                 case "Pro":
-                    return ProBot(CellType.Circle);
+                    return ProBot();
                 case "AI":
-                    return AIBot();
+                    return AIBot(CellType.Circle);
                 default:
                     return NoobBot();
             }
@@ -178,7 +178,11 @@ namespace TicTacToe.Services
 
             return NoobBot();
         }
-        public (int row, int col) ProBot(CellType cell)
+        private (int row, int col) ProBot()
+        {
+            return NoobBot();
+        }
+        public (int row, int col) AIBot(CellType cell)
         {
             int bestScore = int.MinValue;
             (int row, int col) bestMove = (-1, -1);
@@ -209,10 +213,6 @@ namespace TicTacToe.Services
             IsPlayerTurn = true;
 
             return bestMove;
-        }
-        private (int row, int col) AIBot()
-        {
-            return NoobBot();
         }
 
         private int Minimax(ObservableCollection<ObservableCollection<CellType>> board, bool isMaximizing, CellType cell)
@@ -265,7 +265,7 @@ namespace TicTacToe.Services
 
         public (int row, int col) HintMove()
         {
-            return ProBot(CellType.Cross);
+            return AIBot(CellType.Cross);
         }
     }
 }
