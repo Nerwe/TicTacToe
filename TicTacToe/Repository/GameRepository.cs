@@ -17,7 +17,7 @@ namespace TicTacToe.Repository
                 command.CommandText = "INSERT INTO Games([player_id], [score], [date]) VALUES (@player_id, @score, @date)";
                 command.Parameters.Add("@player_id", System.Data.SqlDbType.NVarChar).Value = game.PlayerID;
                 command.Parameters.Add("@score", System.Data.SqlDbType.NVarChar).Value = game.Score;
-                command.Parameters.Add("@date", System.Data.SqlDbType.NVarChar).Value = game.Date;
+                command.Parameters.Add("@date", System.Data.SqlDbType.DateTime).Value = game.Date;
                 command.ExecuteScalar();
             }
         }
