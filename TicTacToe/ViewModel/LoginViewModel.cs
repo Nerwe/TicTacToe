@@ -12,8 +12,8 @@ namespace TicTacToe.ViewModel
         private readonly MainViewModel _mainViewModel;
         private IPlayerRepository _playerRepository;
 
-        private string _username = "admin1";
-        private string _password = "admin";
+        private string _username;
+        private string _password;
         private string _errorMessage;
 
         //Properties
