@@ -17,6 +17,9 @@ namespace TicTacToe.ViewModel
         private string _errorMessage;
         private string _doneMessage;
 
+        private string _originalUsername;
+        private string _originalPassword;
+
 
         //Properties
         public PlayerModel CurrentPlayer
@@ -46,6 +49,24 @@ namespace TicTacToe.ViewModel
                 OnPropertyChanged(nameof(DoneMessage));
             }
         }
+        public string OriginalUsername
+        {
+            get => _originalUsername;
+            set
+            {
+                _originalUsername = value;
+                OnPropertyChanged(nameof(OriginalUsername));
+            }
+        }
+        public string OriginalPassword
+        {
+            get => _originalPassword;
+            set
+            {
+                _originalPassword = value;
+                OnPropertyChanged(nameof(OriginalPassword));
+            }
+        }
 
         //Commands
         public ICommand SaveChangesCommand { get; }
@@ -60,6 +81,8 @@ namespace TicTacToe.ViewModel
             _playerRepository = new PlayerRepository();
 
             CurrentPlayer = PlayerSession.Instance.CurrentPlayer;
+            OriginalUsername = CurrentPlayer.Username;
+            OriginalPassword = CurrentPlayer.Password;
 
             SaveChangesCommand = new ViewModelCommand(ExecuteSaveChangesCommand, CanExecuteSaveChangesCommand);
             LogoutCommand = new ViewModelCommand(ExecuteLogoutCommand);
@@ -94,6 +117,8 @@ namespace TicTacToe.ViewModel
         private void ExecuteSaveChangesCommand(object obj)
         {
             ErrorMessage = "";
+            CurrentPlayer.Username = OriginalUsername;
+            CurrentPlayer.Password = OriginalPassword;
             _playerRepository.UpdatePlayer(CurrentPlayer);
             PlayerSession.Instance.SetCurrentPlayer(CurrentPlayer);
             DoneMessage = "* Changes saved";
